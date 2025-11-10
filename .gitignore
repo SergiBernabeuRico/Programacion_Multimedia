@@ -1,0 +1,87 @@
+# =========================
+# ANDROID STUDIO - MONOREPO
+# =========================
+
+# --- Archivos del sistema ---
+.DS_Store
+Thumbs.db
+
+# --- Archivos de compilación ---
+**/build/
+**/.gradle/
+**/.cxx/
+**/.externalNativeBuild/
+**/.settings/
+
+# --- Archivos de IDE (Android Studio / IntelliJ) ---
+**/.idea/
+**/*.iml
+**/.classpath
+**/.project
+**/.metadata/
+
+# --- Archivos locales ---
+local.properties
+.gradle/
+.gradle-cache/
+captures/
+output.json
+
+# --- Firmas, claves y configuración sensible ---
+**/key.properties
+**/*.keystore
+**/*.jks
+
+# --- Archivos temporales ---
+*.log
+*.tmp
+*.temp
+*.bak
+
+# --- Librerías descargadas / cacheadas ---
+**/libs/*.jar
+!**/libs/*.aar   # Conserva los .aar si los añades tú mismo
+**/.kotlin/
+**/.navigation/
+
+# --- Sistema operativo ---
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- Archivos generados por Gradle Wrapper ---
+gradle-app.setting
+gradlew
+gradlew.bat
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# --- Archivos de tests o reportes ---
+**/test-results/
+**/reports/
+
+# --- Archivos de compilación temporal ---
+*.apk
+*.ap_
+*.dex
+*.class
+*.so
+*.obj
+
+# --- Configuraciones personales ---
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# --- Archivos de control de versión ---
+*.orig
+*.rej
+*.diff
+
+# --- Otros ---
+*.swp
+*.swo
+*.bak
+*.tmp
+*.temp
