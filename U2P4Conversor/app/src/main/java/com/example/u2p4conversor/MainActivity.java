@@ -1,6 +1,7 @@
 package com.example.u2p4conversor;
 
 import android.os.Bundle;
+import android.util.Log; //  Logs en Logcat
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +15,12 @@ import androidx.core.view.WindowInsetsCompat;
 import android.widget.RadioButton;
 import java.text.DecimalFormat;
 
+
+
 public class MainActivity extends AppCompatActivity {
+
+    // [CONSTANTE NUEVA] Etiqueta para identificar todos tus mensajes en Logcat (filtra por “U2P4Conversor”)
+    private static final String TAG = "U2P4Conversor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // [LOG CICLO DE VIDA] Indica que la Activity está en fase de creación
+        Log.d(TAG, "onCreate()");
 
         setUI();
     }
@@ -41,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
         // buttonConvertir.setOnClickListener(view -> etResultado.setText(convertir(etPulgada.getText().toString())));
 
         buttonConvertir.setOnClickListener(view -> {
+
             // Leemos el texto del EditText de entrada y quitamos espacios
             String txt = etPulgada.getText().toString().trim();
+
+            // [LOG CLIC BOTÓN] Obtenemos el nombre del recurso (por ej., "button_Convertir") para un mensaje claro
+            String btnName = getResources().getResourceEntryName(view.getId());
+            Log.d(TAG, "Click botón: " + btnName);
 
             // Si está vacío, limpiamos el resultado y salimos
             if (txt.isEmpty()) {
@@ -72,5 +85,73 @@ public class MainActivity extends AppCompatActivity {
     private String formatTwo(double n) {
         return new DecimalFormat("#0.00").format(n);
     }
+
+    // (2.1) Convierte validando que el valor no esté vacío y sea >= 1.
+    // Lanza Exception con mensajes EXACTOS del enunciado para que se muestren en el TextView de error.
+    private double convertir(String input, boolean inToCm) throws Exception {
+        // Comprobación de vacío
+        if (input == null || input.trim().isEmpty()) {
+            throw new Exception("El valor no puede estar vacío");
+        }
+
+        // Parseo numérico (acepta coma o punto)
+        double valor;
+        try {
+            valor = Double.parseDouble(input.trim().replace(',', '.'));
+        } catch (NumberFormatException nfe) {
+            // Mensaje libre (no lo exige el enunciado), pero útil si ponen "abc"
+            throw new Exception("Valor no válido");
+        }
+
+        // Restricción: sólo números >= 1
+        if (valor < 1.0) {
+            throw new Exception("Sólo números >=1");
+        }
+
+        // Conversión según dirección seleccionada
+        return inToCm ? (valor * 2.54) : (valor / 2.54);
+    }
+    // [CICLO DE VIDA] La Activity está a punto de hacerse visible para el usuario
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart()");
+    }
+
+    // [CICLO DE VIDA] La Activity empieza a interactuar con el usuario (adquiere foco)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()");
+    }
+
+    // [CICLO DE VIDA] La Activity pierde foco (por ejemplo, llega otra Activity encima)
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause()");
+    }
+
+    // [CICLO DE VIDA] La Activity ya no es visible para el usuario
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop()");
+    }
+
+    // [CICLO DE VIDA] La Activity vuelve a primer plano tras haber estado parada
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart()");
+    }
+
+    // [CICLO DE VIDA] La Activity está a punto de destruirse (fin de su ciclo)
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+    }
+
 
 }
