@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout de la pantalla de ayuda (instrucciones de uso y botón volver) -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121212">
 
+    <!-- Texto explicativo con las instrucciones y mensajes de error -->
     <TextView
         android:id="@+id/tvHelp"
         android:layout_width="0dp"
@@ -14,6 +16,19 @@
         android:padding="16dp"
         android:text="Cómo usar la app:\n\n1) Elige el tipo de conversión (Spinner).\n2) Selecciona la dirección (RadioButtons).\n3) Introduce un valor numérico (>=1).\n4) Pulsa Convertir.\n\nMensajes de error:\n- “El valor no puede estar vacío”.\n- “Sólo números >=1”.\n- “Valor no válido”."
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Botón que permite volver a la pantalla principal -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#009688"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHelp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

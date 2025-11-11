@@ -1,95 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Layout horizontal específico para landscape (seguro y visible) -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#121212"
     tools:context=".MainActivity">
 
-    <!-- Título arriba a la izquierda -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/textViewInfo"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnHelp"
-        android:layout_margin="16dp"/>
+    <!-- Texto de cabecera -->
+<TextView
+android:id="@+id/textView"
+android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/textViewInfo"
+    android:textColor="#FFFFFF"
+    android:textSize="18sp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="72dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/btnHelp" />
 
-    <!-- Botón ayuda arriba derecha -->
-    <Button
-        android:id="@+id/btnHelp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:drawableStart="@android:drawable/ic_menu_help"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+    <!-- Botón de ayuda (icono ?) arriba derecha -->
+<Button
+android:id="@+id/btnHelp"
+android:layout_width="48dp"
+android:layout_height="48dp"
+android:padding="8dp"
+android:backgroundTint="#555555"
+android:drawableTop="@android:drawable/ic_menu_help"
+android:contentDescription="@string/help_content_desc"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+android:layout_marginTop="12dp"
+android:layout_marginEnd="12dp"/>
 
-    <!-- Columna izquierda: Spinner + RadioGroup -->
-    <Spinner
-        android:id="@+id/spTipo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/et_Pulgada"
-        android:layout_margin="16dp"/>
+    <!-- Selector del tipo de conversión -->
+<Spinner
+android:id="@+id/spTipo"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_marginStart="16dp"
+android:layout_marginEnd="16dp"
+android:layout_marginTop="8dp"
+app:layout_constraintTop_toBottomOf="@id/textView"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"/>
 
-    <RadioGroup
-        android:id="@+id/rgDireccion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/spTipo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/et_Pulgada"
-        android:layout_margin="16dp">
-        <!-- tus RadioButtons dentro -->
-    </RadioGroup>
+    <!-- Dirección de conversión -->
+<RadioGroup
+android:id="@+id/rgDireccion"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginTop="12dp"
+app:layout_constraintTop_toBottomOf="@id/spTipo"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Columna derecha: entrada, botón, error, resultado -->
-    <EditText
-        android:id="@+id/et_Pulgada"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintStart_toEndOf="@id/spTipo"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:inputType="numberDecimal" />
+<RadioButton
+    android:id="@+id/rbInToCm"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checked="true"
+    android:text="@string/rb_in_to_cm"
+    android:textColor="#FFFFFF"/>
 
-    <Button
-        android:id="@+id/button_Convertir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/et_Pulgada"
-        app:layout_constraintStart_toStartOf="@id/et_Pulgada"
-        android:layout_margin="16dp"
-        android:text="@string/buttonConvertir"/>
+<RadioButton
+    android:id="@+id/rbCmToIn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="@string/rb_cm_to_in"
+    android:textColor="#FFFFFF"/>
+</RadioGroup>
 
-    <TextView
-        android:id="@+id/tv_Error"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="#F44336"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/button_Convertir"
-        app:layout_constraintStart_toStartOf="@id/et_Pulgada"
-        app:layout_constraintEnd_toEndOf="@id/et_Pulgada"
-        android:layout_margin="16dp"/>
+    <!-- Fila horizontal con entrada, botón y resultado -->
+<LinearLayout
+android:id="@+id/llConversion"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:gravity="center"
+android:layout_marginTop="20dp"
+android:paddingStart="12dp"
+android:paddingEnd="12dp"
+app:layout_constraintTop_toBottomOf="@id/rgDireccion"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
 
-    <EditText
-        android:id="@+id/et_Resultado"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_Error"
-        app:layout_constraintStart_toStartOf="@id/et_Pulgada"
-        app:layout_constraintEnd_toEndOf="@id/et_Pulgada"
-        android:layout_margin="16dp"
-        android:inputType="numberDecimal"/>
+<!-- Entrada -->
+<EditText
+    android:id="@+id/et_Pulgada"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ems="8"
+    android:digits="0123456789.,"
+    android:hint="@string/textViewHintPedir"
+    android:inputType="numberDecimal"
+    android:minHeight="48dp"
+    android:textAlignment="center"
+    android:textColor="#FFFFFF"
+    android:textColorHint="#FFFFFF"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!-- Botón convertir -->
+<Button
+    android:id="@+id/button_Convertir"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:backgroundTint="#2196F3"
+    android:text="@string/buttonConvertir"/>
+
+<!-- Resultado -->
+<EditText
+    android:id="@+id/et_Resultado"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ems="8"
+    android:enabled="false"
+    android:hint="@string/editTextHintResultado"
+    android:minHeight="48dp"
+    android:textAlignment="center"
+    android:textColor="#FFFFFF"
+    android:textColorHint="#FFFFFF"/>
+</LinearLayout>
+
+    <!-- Mensajes de error (rojo) -->
+<TextView
+android:id="@+id/tv_Error"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text=""
+android:textColor="#F44336"
+android:textStyle="bold"
+android:layout_marginTop="12dp"
+android:visibility="gone"
+app:layout_constraintTop_toBottomOf="@id/llConversion"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>

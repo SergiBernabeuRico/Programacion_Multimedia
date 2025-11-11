@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout principal de la aplicación (pantalla del conversor) -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     android:background="@drawable/fondo_pantalla"
     tools:context=".MainActivity">
 
+    <!-- Texto de cabecera (título o información general) -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -20,9 +22,9 @@
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Selector del tipo de conversión (p.ej. Pulgadas↔Centímetros, Centímetros↔Milímetros, Kilómetros↔Millas) -->
+    <!-- Selector del tipo de conversión (Spinner) -->
     <Spinner
         android:id="@+id/spTipo"
         android:layout_width="0dp"
@@ -32,8 +34,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp" />
 
+    <!-- Grupo de RadioButtons para elegir la dirección de conversión -->
     <RadioGroup
         android:id="@+id/rgDireccion"
         android:layout_width="wrap_content"
@@ -44,6 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp">
 
+        <!-- Opción: Pulgadas → Centímetros -->
         <RadioButton
             android:id="@+id/rbInToCm"
             android:layout_width="wrap_content"
@@ -52,6 +56,7 @@
             android:text="@string/rb_in_to_cm"
             android:textColor="#FFFFFF" />
 
+        <!-- Opción: Centímetros → Pulgadas -->
         <RadioButton
             android:id="@+id/rbCmToIn"
             android:layout_width="wrap_content"
@@ -61,6 +66,7 @@
             android:textColor="#FFFFFF" />
     </RadioGroup>
 
+    <!-- Campo de texto de entrada (valor a convertir) -->
     <EditText
         android:id="@+id/et_Pulgada"
         android:digits="0123456789.,"
@@ -79,8 +85,9 @@
         android:textColorHint="#FFFFFF"
         app:layout_constraintLeft_toLeftOf="@+id/textView"
         app:layout_constraintRight_toRightOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/rgDireccion"/>
+        app:layout_constraintTop_toBottomOf="@+id/rgDireccion" />
 
+    <!-- Botón que realiza la conversión -->
     <Button
         android:id="@+id/button_Convertir"
         android:layout_width="wrap_content"
@@ -92,8 +99,9 @@
         android:text="@string/buttonConvertir"
         app:layout_constraintLeft_toLeftOf="@+id/et_Pulgada"
         app:layout_constraintRight_toRightOf="@+id/et_Pulgada"
-        app:layout_constraintTop_toBottomOf="@+id/et_Pulgada"/>
+        app:layout_constraintTop_toBottomOf="@+id/et_Pulgada" />
 
+    <!-- Texto para mostrar mensajes de error (en color rojo) -->
     <TextView
         android:id="@+id/tv_Error"
         android:layout_width="wrap_content"
@@ -104,8 +112,9 @@
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="@+id/et_Pulgada"
         app:layout_constraintRight_toRightOf="@+id/et_Pulgada"
-        app:layout_constraintTop_toBottomOf="@+id/button_Convertir"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_Convertir" />
 
+    <!-- Campo de texto de salida (resultado de la conversión) -->
     <EditText
         android:id="@+id/et_Resultado"
         android:enabled="false"
@@ -124,18 +133,20 @@
         android:textColorHint="#FFFFFF"
         app:layout_constraintLeft_toLeftOf="@+id/et_Pulgada"
         app:layout_constraintRight_toRightOf="@+id/et_Pulgada"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Error"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_Error" />
 
-    <!-- Botón de ayuda (abre una nueva Activity con instrucciones) -->
+    <!-- Botón de ayuda (abre HelpActivity con el icono de interrogación) -->
     <Button
         android:id="@+id/btnHelp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#009688"
+        android:backgroundTint="#555555"
+        android:drawableTop="@android:drawable/ic_menu_help"
         android:contentDescription="@string/help_content_desc"
-        android:text=""/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
