@@ -13,6 +13,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.widget.RadioButton;
+import android.widget.TextView;
+
 import java.text.DecimalFormat;
 
 
@@ -21,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
 
     // [CONSTANTE NUEVA] Etiqueta para identificar todos tus mensajes en Logcat (filtra por “U2P4Conversor”)
     private static final String TAG = "U2P4Conversor";
+
+    // [ESTADO] Claves para guardar/restaurar el estado tras cambio de orientación
+    private static final String K_IN      = "state_input";        // texto introducido en et_Pulgada
+    private static final String K_RES     = "state_result";       // texto mostrado en et_Resultado
+    private static final String K_ERR_TXT = "state_error_text";   // texto del tv_Error
+    private static final String K_ERR_VIS = "state_error_vis";    // visibilidad del tv_Error (true = visible)
+    private static final String K_DIR_IN2CM = "state_dir_in2cm";  // true si está seleccionado Pulgadas→Centímetros
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         // [LOG CICLO DE VIDA] Indica que la Activity está en fase de creación
-        Log.d(TAG, "onCreate()");
+        // Log.d(TAG, "onCreate()");
+        Log.d(TAG, "onCreate() - recreada por cambio de orientación si savedInstanceState != null");
+
+
 
         setUI();
     }
@@ -152,6 +165,66 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy()");
     }
+    // [CICLO DE VIDA 4.2] Se llama antes de destruir la Activity: guardamos el estado que queremos restaurar
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState()"); // Log para ver el momento del guardado
+
+        // Obtenemos referencias a las vistas actuales
+        EditText etPulgada   = findViewById(R.id.et_Pulgada);
+        EditText etResultado = findViewById(R.id.et_Resultado);
+        RadioButton rbInToCm = findViewById(R.id.rbInToCm);
+        TextView tvError     = findViewById(R.id.tv_Error); // si no existe en tu layout, comenta estas dos líneas
+
+        // Guardamos textos y dirección de conversión
+        outState.putString(K_IN,  etPulgada != null ? etPulgada.getText().toString() : "");
+        outState.putString(K_RES, etResultado != null ? etResultado.getText().toString() : "");
+
+        // Guardamos el estado del selector (true si Pulgadas→Centímetros)
+        outState.putBoolean(K_DIR_IN2CM, rbInToCm != null && rbInToCm.isChecked());
+
+        // Guardamos mensaje y visibilidad del error (si usas tv_Error)
+        if (tvError != null) {
+            outState.putString(K_ERR_TXT, tvError.getText() != null ? tvError.getText().toString() : "");
+            outState.putBoolean(K_ERR_VIS, tvError.getVisibility() == View.VISIBLE);
+        }
+    }
+    // [CICLO DE VIDA 4.2] Se llama después de onStart: restauramos el estado guardado
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "onRestoreInstanceState()"); // Log para ver el momento de la restauración
+
+        // Obtenemos referencias a las vistas
+        EditText etPulgada     = findViewById(R.id.et_Pulgada);
+        EditText etResultado   = findViewById(R.id.et_Resultado);
+        RadioButton rbInToCm   = findViewById(R.id.rbInToCm);
+        RadioButton rbCmToIn   = findViewById(R.id.rbCmToIn);
+        TextView tvError       = findViewById(R.id.tv_Error); // si no existe en tu layout, comenta estas líneas
+
+        // Restauramos textos de entrada y resultado
+        if (etPulgada != null)   etPulgada.setText(savedInstanceState.getString(K_IN, ""));
+        if (etResultado != null) etResultado.setText(savedInstanceState.getString(K_RES, ""));
+
+        // Restauramos la dirección seleccionada
+        boolean wasInToCm = savedInstanceState.getBoolean(K_DIR_IN2CM, true);
+        if (rbInToCm != null && rbCmToIn != null) {
+            rbInToCm.setChecked(wasInToCm);
+            rbCmToIn.setChecked(!wasInToCm);
+        }
+
+        // Restauramos error (texto + visibilidad)
+        if (tvError != null) {
+            String errText = savedInstanceState.getString(K_ERR_TXT, "");
+            boolean errVis = savedInstanceState.getBoolean(K_ERR_VIS, false);
+            tvError.setText(errText);
+            tvError.setVisibility(errVis ? View.VISIBLE : View.GONE);
+        }
+    }
+
+
+
 
 
 }
