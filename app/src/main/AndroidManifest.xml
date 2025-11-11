@@ -11,15 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.U2P4Conversor">
+
+        <!-- ✅ MainActivity será la pantalla inicial -->
         <activity
-            android:name=".HelpActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ✅ HelpActivity solo se abrirá mediante Intent -->
+        <activity android:name=".HelpActivity" />
+
     </application>
 
 </manifest>
