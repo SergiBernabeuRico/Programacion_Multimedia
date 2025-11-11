@@ -6,4 +6,9 @@
     <string name="editTextHintResultado">Resultado</string>
     <string name="rb_in_to_cm">Pulgadas → Centímetros</string>
     <string name="rb_cm_to_in">Centímetros → Pulgadas</string>
+    <string name="help_content_desc">Ayuda</string>
+    <string name="conv_in_cm">Pulgadas ↔ Centímetros</string>
+    <string name="conv_cm_mm">Centímetros ↔ Milímetros</string>
+    <string name="conv_km_mi">Kilómetros ↔ Millas</string>
+
 </resources>

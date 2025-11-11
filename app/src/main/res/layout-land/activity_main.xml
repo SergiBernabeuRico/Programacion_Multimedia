@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Título arriba a la izquierda -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewInfo"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnHelp"
+        android:layout_margin="16dp"/>
+
+    <!-- Botón ayuda arriba derecha -->
+    <Button
+        android:id="@+id/btnHelp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:drawableStart="@android:drawable/ic_menu_help"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
+
+    <!-- Columna izquierda: Spinner + RadioGroup -->
+    <Spinner
+        android:id="@+id/spTipo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/et_Pulgada"
+        android:layout_margin="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/rgDireccion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/spTipo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/et_Pulgada"
+        android:layout_margin="16dp">
+        <!-- tus RadioButtons dentro -->
+    </RadioGroup>
+
+    <!-- Columna derecha: entrada, botón, error, resultado -->
+    <EditText
+        android:id="@+id/et_Pulgada"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toEndOf="@id/spTipo"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/button_Convertir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_Pulgada"
+        app:layout_constraintStart_toStartOf="@id/et_Pulgada"
+        android:layout_margin="16dp"
+        android:text="@string/buttonConvertir"/>
+
+    <TextView
+        android:id="@+id/tv_Error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#F44336"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/button_Convertir"
+        app:layout_constraintStart_toStartOf="@id/et_Pulgada"
+        app:layout_constraintEnd_toEndOf="@id/et_Pulgada"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/et_Resultado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_Error"
+        app:layout_constraintStart_toStartOf="@id/et_Pulgada"
+        app:layout_constraintEnd_toEndOf="@id/et_Pulgada"
+        android:layout_margin="16dp"
+        android:inputType="numberDecimal"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

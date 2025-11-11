@@ -22,12 +22,24 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!-- Selector del tipo de conversión (p.ej. Pulgadas↔Centímetros, Centímetros↔Milímetros, Kilómetros↔Millas) -->
+    <Spinner
+        android:id="@+id/spTipo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="12dp"/>
+
     <RadioGroup
         android:id="@+id/rgDireccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintTop_toBottomOf="@id/spTipo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp">
@@ -113,5 +125,17 @@
         app:layout_constraintLeft_toLeftOf="@+id/et_Pulgada"
         app:layout_constraintRight_toRightOf="@+id/et_Pulgada"
         app:layout_constraintTop_toBottomOf="@+id/tv_Error"/>
+
+    <!-- Botón de ayuda (abre una nueva Activity con instrucciones) -->
+    <Button
+        android:id="@+id/btnHelp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#009688"
+        android:contentDescription="@string/help_content_desc"
+        android:text=""/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

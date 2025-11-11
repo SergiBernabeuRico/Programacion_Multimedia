@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Opciones del Spinner: tres tipos de conversión en doble sentido -->
+    <string-array name="conv_options">
+        <item>@string/conv_in_cm</item>
+        <item>@string/conv_cm_mm</item>
+        <item>@string/conv_km_mi</item>
+    </string-array>
+</resources>

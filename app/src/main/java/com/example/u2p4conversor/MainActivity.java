@@ -17,6 +17,14 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+// Spinner y su adaptador
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+
+// Para abrir la Activity de ayuda
+import android.content.Intent;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,47 +60,84 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUI() {
-        EditText etPulgada = findViewById(R.id.et_Pulgada);   // Referencia al campo de texto donde el usuario introduce el valor en pulgadas o centímetros
-        EditText etResultado = findViewById(R.id.et_Resultado); // Referencia al campo de texto donde se mostrará el resultado de la conversión
-        Button buttonConvertir = findViewById(R.id.button_Convertir); // Referencia al botón que el usuario pulsa para realizar la conversión
-        RadioButton rbInToCm = findViewById(R.id.rbInToCm);   // Referencia al botón de opción "Pulgadas → Centímetros"
-        RadioButton rbCmToIn = findViewById(R.id.rbCmToIn);   // Referencia al botón de opción "Centímetros → Pulgadas"
+        // Referencias existentes
+        EditText etPulgada = findViewById(R.id.et_Pulgada);         // Entrada numérica (usuario escribe)
+        EditText etResultado = findViewById(R.id.et_Resultado);     // Salida (resultado formateado)
+        Button buttonConvertir = findViewById(R.id.button_Convertir); // Botón para ejecutar la conversión
+        RadioButton rbInToCm = findViewById(R.id.rbInToCm);         // Dirección: primera → segunda (ej. pulgadas → cm)
+        RadioButton rbCmToIn = findViewById(R.id.rbCmToIn);         // Dirección: segunda → primera (ej. cm → pulgadas)
 
+        // [NUEVO] Referencias para el punto 5
+        Spinner spTipo = findViewById(R.id.spTipo);                 // Selector del tipo de conversión
+        Button btnHelp = findViewById(R.id.btnHelp);                // Botón de ayuda (se usará en el 5.2)
+        TextView tvError = findViewById(R.id.tv_Error);             // TextView para mostrar mensajes de error en rojo
 
-        // buttonConvertir.setOnClickListener(view -> etResultado.setText(convertir(etPulgada.getText().toString())));
+        // [NUEVO] Cargar el Spinner UNA sola vez (NO dentro del click)
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,                               // contexto de Activity
+                R.array.conv_options,               // opciones: in↔cm, cm↔mm, km↔mi (definidas en arrays.xml)
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spTipo.setAdapter(adapter);
 
+        // Listener del botón convertir (reemplaza por completo al anterior)
         buttonConvertir.setOnClickListener(view -> {
-
-            // Leemos el texto del EditText de entrada y quitamos espacios
-            String txt = etPulgada.getText().toString().trim();
-
-            // [LOG CLIC BOTÓN] Obtenemos el nombre del recurso (por ej., "button_Convertir") para un mensaje claro
+            // [LOG CLIC BOTÓN] (punto 3.2)
             String btnName = getResources().getResourceEntryName(view.getId());
             Log.d(TAG, "Click botón: " + btnName);
 
-            // Si está vacío, limpiamos el resultado y salimos
-            if (txt.isEmpty()) {
-                etResultado.setText("");
-                return;
+            // Limpiar estado de error previo
+            tvError.setVisibility(View.GONE);
+            tvError.setText("");
+
+            try {
+                // 1) Leemos entrada
+                String txt = etPulgada.getText().toString().trim();
+
+                // 2) Dirección: true = primera→segunda (rbInToCm), false = inversa
+                boolean forward = rbInToCm.isChecked();
+
+                // 3) Tipo de conversión elegido en el Spinner
+                //    0 = Pulgadas ↔ Centímetros  (factor 2.54)
+                //    1 = Centímetros ↔ Milímetros (factor 10.0)
+                //    2 = Kilómetros ↔ Millas      (km = mi * 1.60934)
+                int tipo = spTipo.getSelectedItemPosition();
+
+                double res;
+                switch (tipo) {
+                    case 0: // Pulgadas ↔ Centímetros
+                        res = convertirConFactor(txt, forward, 2.54);
+                        break;
+                    case 1: // Centímetros ↔ Milímetros
+                        res = convertirConFactor(txt, forward, 10.0);
+                        break;
+                    case 2: // Kilómetros ↔ Millas
+                    default:
+                        res = convertirConFactor(txt, forward, 1.60934);
+                        break;
+                }
+
+                // 4) Mostrar salida con 2 decimales (punto 1.2)
+                etResultado.setText(formatTwo(res));
+
+            } catch (Exception e) {
+                // Errores del punto 2 (vacío, <1, no numérico...): se muestran en rojo
+                etResultado.setText("");             // limpiamos el resultado
+                tvError.setText(e.getMessage());     // mensaje exacto de la excepción
+                tvError.setVisibility(View.VISIBLE); // visible solo cuando hay error
             }
+        });
 
-            // Permitimos que el usuario use coma o punto como separador decimal
-            double valor = Double.parseDouble(txt.replace(',', '.'));
-
-            // (1.1) Dirección de conversión según el RadioButton marcado:
-            // - Si rbInToCm está marcado: pulgadas → centímetros (× 2.54)
-            // - Si rbCmToIn está marcado: centímetros → pulgadas (÷ 2.54)
-            double res = rbInToCm.isChecked() ? (valor * 2.54) : (valor / 2.54);
-
-            // (1.2) Mostramos el resultado con DOS decimales
-            etResultado.setText(formatTwo(res));
+        // onClick de btnHelp para abrir HelpActivity
+        // [5.2] Botón de ayuda: abre una nueva Activity con instrucciones de uso
+        btnHelp.setOnClickListener(v -> {
+            Log.d(TAG, "Click botón: btnHelp (abre HelpActivity)"); // Log del clic de ayuda
+            Intent i = new Intent(MainActivity.this, HelpActivity.class); // Intent explícito a HelpActivity
+            startActivity(i); // Lanzamos la nueva pantalla
         });
 
     }
-    /*private String convertir(String pulgadaText) {
-        double pulgadaValue = Double.parseDouble(pulgadaText) * 2.54;
-        return String.valueOf(pulgadaValue);
-    } Metodo deshabilitado por no usar la lambda que lo llama */
 
     // Formatea un double a 2 decimales (por ejemplo: 3.1 → "3.10")
     private String formatTwo(double n) {
@@ -101,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
     // (2.1) Convierte validando que el valor no esté vacío y sea >= 1.
     // Lanza Exception con mensajes EXACTOS del enunciado para que se muestren en el TextView de error.
-    private double convertir(String input, boolean inToCm) throws Exception {
+    /*private double convertir(String input, boolean inToCm) throws Exception {
         // Comprobación de vacío
         if (input == null || input.trim().isEmpty()) {
             throw new Exception("El valor no puede estar vacío");
@@ -123,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Conversión según dirección seleccionada
         return inToCm ? (valor * 2.54) : (valor / 2.54);
-    }
+    }*/
     // [CICLO DE VIDA] La Activity está a punto de hacerse visible para el usuario
     @Override
     protected void onStart() {
@@ -222,9 +267,31 @@ public class MainActivity extends AppCompatActivity {
             tvError.setVisibility(errVis ? View.VISIBLE : View.GONE);
         }
     }
+// [NUEVO] Conversión genérica con validaciones (punto 2) y factor configurable.
+// forward = true  → primera unidad → segunda (multiplica por factor)
+// forward = false → segunda unidad → primera (divide por factor)
+private double convertirConFactor(String input, boolean forward, double factor) throws Exception {
+    // Vacío → excepción con el mensaje EXACTO del enunciado
+    if (input == null || input.trim().isEmpty()) {
+        throw new Exception("El valor no puede estar vacío");
+    }
 
+    // Parseo numérico (admite coma o punto)
+    double valor;
+    try {
+        valor = Double.parseDouble(input.trim().replace(',', '.'));
+    } catch (NumberFormatException nfe) {
+        throw new Exception("Valor no válido");
+    }
 
+    // Restricción: sólo números >= 1
+    if (valor < 1.0) {
+        throw new Exception("Sólo números >=1");
+    }
 
+    // Cálculo según dirección y factor
+    return forward ? (valor * factor) : (valor / factor);
+}
 
 
 }
