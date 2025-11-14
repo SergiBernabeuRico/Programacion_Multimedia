@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout landscape: seguro y visible con mismos IDs -->
+<!-- activity_main.xml (land) — Layout horizontal específico -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,14 +10,14 @@
     android:background="@drawable/fondo_pantalla"
     tools:context=".MainActivity">
 
-    <!-- Título con hueco para el botón de ayuda -->
+    <!-- Título -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/textViewInfo"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="72dp"
@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnHelp"/>
 
-    <!-- Botón de ayuda -->
+    <!-- Botón ayuda -->
     <Button
         android:id="@+id/btnHelp"
         android:layout_width="48dp"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- RadioGroup dirección -->
+    <!-- Dirección -->
     <RadioGroup
         android:id="@+id/rgDireccion"
         android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
             android:textColor="#FFFFFF"/>
     </RadioGroup>
 
-    <!-- Fila con entrada, botón y resultado -->
+    <!-- Bloque horizontal de conversión -->
     <LinearLayout
         android:id="@+id/llConversion"
         android:layout_width="0dp"
@@ -93,6 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Entrada -->
         <EditText
             android:id="@+id/et_Pulgada"
             android:layout_width="wrap_content"
@@ -106,6 +107,7 @@
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"/>
 
+        <!-- Botón convertir -->
         <Button
             android:id="@+id/button_Convertir"
             android:layout_width="wrap_content"
@@ -115,6 +117,7 @@
             android:backgroundTint="#2196F3"
             android:text="@string/buttonConvertir"/>
 
+        <!-- Resultado -->
         <EditText
             android:id="@+id/et_Resultado"
             android:layout_width="wrap_content"
@@ -128,7 +131,7 @@
             android:textColorHint="#FFFFFF"/>
     </LinearLayout>
 
-    <!-- Errores -->
+    <!-- Error -->
     <TextView
         android:id="@+id/tv_Error"
         android:layout_width="wrap_content"

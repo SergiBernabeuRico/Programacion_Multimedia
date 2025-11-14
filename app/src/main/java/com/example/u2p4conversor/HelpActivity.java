@@ -1,9 +1,10 @@
-// HelpActivity: muestra ayuda y vuelve al Main con botón y flecha Up
+// HelpActivity.java — Pantalla de ayuda con botón Volver
 package com.example.u2p4conversor;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HelpActivity extends AppCompatActivity {
@@ -12,11 +13,11 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        // Botón Volver (cierra esta pantalla)
+        // Botón Volver
         Button btnVolver = findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(v -> finish());
 
-        // Flecha “Up” en la barra (si tu tema la muestra)
+        // Flecha arriba en la barra
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Ayuda");

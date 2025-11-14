@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- arrays.xml — Opciones del Spinner de tipos de conversión -->
 <resources>
-    <!-- Opciones del Spinner: tres tipos de conversión en doble sentido -->
     <string-array name="conv_options">
-        <item>@string/conv_in_cm</item>
-        <item>@string/conv_cm_mm</item>
-        <item>@string/conv_km_mi</item>
+        <item>Pulgadas ↔ Centímetros</item>
+        <item>Kilómetros ↔ Millas</item>
+        <item>Grados °C ↔ Grados °F</item>
     </string-array>
 </resources>
