@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity">
+
+    <!-- Barra morada superior, pegada arriba y más alta -->
+    <TextView
+        android:id="@+id/txtBarraWelcome"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:background="@color/purple_500"
+        android:text="Banco-SEBERI"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:gravity="bottom|start"
+        android:paddingStart="16dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Texto central: Bienvenido a tu banco -->
+    <TextView
+        android:id="@+id/txtBienvenida"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido a tu banco"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintTop_toBottomOf="@id/txtBarraWelcome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.35" />
+
+    <!-- Botón ENTRAR -->
+    <Button
+        android:id="@+id/btnEntrarWelcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="ENTRAR"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:background="@color/purple_500"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/txtBienvenida"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
